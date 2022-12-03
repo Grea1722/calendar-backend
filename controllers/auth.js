@@ -2,7 +2,7 @@ const { response } = require("express");
 //* lo de arriba es para tener el intellisense
 const bcrypt = require("bcryptjs");
 const Usuario = require("../models/Usuario");
-const {generarJWT} = require('../helpers/jwt');
+const { generarJWT } = require("../helpers/jwt");
 
 const crearUsuario = async (req, res = response) => {
   const { email, password } = req.body;
@@ -31,7 +31,7 @@ const crearUsuario = async (req, res = response) => {
       ok: true,
       uid: usuario.id,
       name: usuario.name,
-      token
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -72,7 +72,7 @@ const loginUsuario = async (req, res = response) => {
       ok: true,
       uid: usuario.id,
       name: usuario.name,
-      token
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -91,15 +91,16 @@ const loginUsuario = async (req, res = response) => {
 };
 
 const revalidarToken = async (req, res = response) => {
-
   const uid = req.uid;
   const name = req.name;
 
-  const token =  await generarJWT(uid, name);
+  const token = await generarJWT(uid, name);
 
   res.json({
     ok: true,
-    token
+    uid,
+    name,
+    token,
   });
 };
 
